@@ -1,9 +1,8 @@
-
+"use client";
 import NavLink from "./navLink/navLink";
 import styles from "./links.module.css";
+import { useState } from "react";
 
-
-const Links = () => {
     const links = [
         {
             title: "Homepage",
@@ -20,13 +19,18 @@ const Links = () => {
           {
             title: "Blog",
             path: "/blog",
-          },
+          }
     ];
+
+    const Links = () => {
+        const [open, setOpen] = useState(false);
+
 
     const session = true
     const isAdmin = true
 
     return (
+        <div className={styles.container}>
         <div className={styles.link}>
             {links.map((link =>(
                 <NavLink item={link} key={link.title} />
@@ -44,6 +48,15 @@ const Links = () => {
                 ): (
                     <NavLink item = {{title: "Login", path:"/login"}} />
                 )
+            }
+            </div>
+            <button className={styles.menuButton} onClick={()=>setOpen((prev) => !prev)}>Menu</button>
+            {
+                open && <div className={styles.mobileLinks}>
+                    {links.map((link)=>(
+                        <NavLink item={link} key={link.title}/>
+                    ))}
+                    </div>
             }
         </div>
     )
